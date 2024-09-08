@@ -8,6 +8,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
+
 namespace CSharp_CURA_Automation
 {
 
@@ -25,22 +26,45 @@ namespace CSharp_CURA_Automation
 
             driver = new ChromeDriver(options);
             driver.Manage().Window.Maximize();
-            
+
+            // Open the website.
+            driver.Navigate().GoToUrl("https://katalon-demo-cura.herokuapp.com/");
+
         }
 
         [Test]
         public void executeTest()
         {
-            // Open the website.
-            driver.Navigate().GoToUrl("https://katalon-demo-cura.herokuapp.com/");
+            // Click on Make Appointment button.
+            SeleniumSetMethods.Click(driver, "btn-make-appointment", "Id");
+
+            // Type Username.
+            SeleniumSetMethods.EnterText(driver, "txt-username", "John Doe", "Id");
+
+            // Type Password.
+            SeleniumSetMethods.EnterText(driver, "txt-password", "ThisIsNotAPassword", "Id");
+
+            // Click on Login.
+            SeleniumSetMethods.Click(driver, "btn-login", "Id");
+
+            // Facility DropDown.
+            SeleniumSetMethods.SelectDropDown(driver, "combo_facility", "Seoul CURA Healthcare Center", "Id");
+
+            // Click Apply for hospital readmission.
+            SeleniumSetMethods.Click(driver, "//input[@id='chk_hospotal_readmission']", "XPath");
+
+            // Select HealthProgram.
+            SeleniumSetMethods.Click(driver, "radio_program_medicaid", "Id");
+
+            SeleniumSetMethods.SelectDate(driver, "2024-10-20");
         }
 
         [TearDown]
         public void closeTest()
         {
             // Waiting 5 sec and close the test.
-            Thread.Sleep(5000);
-            driver.Close();
+            //Thread.Sleep(5000);
+            //driver.Close();
 
         }
 
