@@ -17,19 +17,17 @@ namespace CSharp_CURA_Automation
     internal class Program
     {
 
-        IWebDriver driver;
-
         [SetUp]
         public void initilizeTest()
         {
             ChromeOptions options = new ChromeOptions();
             options.AddArgument("--disable-search-engine-choice-screen");
 
-            driver = new ChromeDriver(options);
-            driver.Manage().Window.Maximize();
+            PropertiesCollection.driver = new ChromeDriver(options);
+            PropertiesCollection.driver.Manage().Window.Maximize();
 
             // Open the website.
-            driver.Navigate().GoToUrl("https://katalon-demo-cura.herokuapp.com/");
+            PropertiesCollection.driver.Navigate().GoToUrl("https://katalon-demo-cura.herokuapp.com/");
 
         }
 
@@ -37,35 +35,48 @@ namespace CSharp_CURA_Automation
         public void executeTest()
         {
             // Click on Make Appointment button.
-            SeleniumSetMethods.Click(driver, "btn-make-appointment", "Id");
+            SeleniumSetMethods.Click("btn-make-appointment", "Id");
 
+            
             // Type Username.
-            SeleniumSetMethods.EnterText(driver, "txt-username", "John Doe", "Id");
+            SeleniumSetMethods.EnterText("txt-username", "John Doe", "Id");
 
-            // Type Password.
-            SeleniumSetMethods.EnterText(driver, "txt-password", "ThisIsNotAPassword", "Id");
+           
+            // checking the "Typed Password".
+            SeleniumSetMethods.EnterText("txt-password", "ThisIsNotAPassword", "Id");
+
+            // Get the typed password.
+            Console.WriteLine("The value of password is: " + SeleniumGetMethods.GetText("txt-password", "Id"));
 
             // Click on Login.
-            SeleniumSetMethods.Click(driver, "btn-login", "Id");
+            SeleniumSetMethods.Click("btn-login", "Id");
+
 
             // Facility DropDown.
-            SeleniumSetMethods.SelectDropDown(driver, "combo_facility", "Seoul CURA Healthcare Center", "Id");
+            SeleniumSetMethods.SelectDropDown("combo_facility", "Seoul CURA Healthcare Center", "Id");
+
+            // Check value of the DropDown of Facility.
+            Console.WriteLine("The value of DropDown is: " + SeleniumGetMethods.GetTextFromDDL("combo_facility", "Id"));
+
 
             // Click Apply for hospital readmission.
-            SeleniumSetMethods.Click(driver, "//input[@id='chk_hospotal_readmission']", "XPath");
+            SeleniumSetMethods.Click("//input[@id='chk_hospotal_readmission']", "XPath");
 
             // Select HealthProgram.
-            SeleniumSetMethods.Click(driver, "radio_program_medicaid", "Id");
+            SeleniumSetMethods.Click("radio_program_medicaid", "Id");
 
 
             // Enter date on the calender.
-            SeleniumSetMethods.EnterText(driver, "txt_visit_date", "20/09/2024", "Id");
+            SeleniumSetMethods.EnterText("txt_visit_date", "20/09/2024", "Id");
 
             // Type a comment a comment bar.
-            SeleniumSetMethods.EnterText(driver, "txt_comment", "Makeing a Appointment.", "Id");
+            SeleniumSetMethods.EnterText("txt_comment", "Makeing a Appointment.", "Id");
+
+            // Checking the value of The comment bar.
+            Console.WriteLine("The value of comment is: " + SeleniumGetMethods.GetText("txt_comment", "Id"));
 
             // Click the book Appointment.
-            SeleniumSetMethods.Click(driver, "btn-book-appointment", "Id");
+            SeleniumSetMethods.Click("btn-book-appointment", "Id");
 
 
 
@@ -82,7 +93,7 @@ namespace CSharp_CURA_Automation
         {
             // Waiting 5 sec and close the test.
             //Thread.Sleep(5000);
-            //driver.Close();
+            //PropertiesCollection.driver.Close();
 
         }
 
