@@ -9,6 +9,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
 
+
 namespace CSharp_CURA_Automation
 {
 
@@ -56,7 +57,24 @@ namespace CSharp_CURA_Automation
             // Select HealthProgram.
             SeleniumSetMethods.Click(driver, "radio_program_medicaid", "Id");
 
-            SeleniumSetMethods.SelectDate(driver, "2024-10-20");
+
+            // Enter date on the calender.
+            SeleniumSetMethods.EnterText(driver, "txt_visit_date", "20/09/2024", "Id");
+
+            // Type a comment a comment bar.
+            SeleniumSetMethods.EnterText(driver, "txt_comment", "Makeing a Appointment.", "Id");
+
+            // Click the book Appointment.
+            SeleniumSetMethods.Click(driver, "btn-book-appointment", "Id");
+
+
+
+
+
+
+
+
+
         }
 
         [TearDown]
@@ -75,3 +93,33 @@ namespace CSharp_CURA_Automation
         }
     }
 }
+
+
+
+//public static void SelectDate(IWebDriver driver, string date)
+//{
+//    // Click on the calender.
+//    Click(driver, "txt_visit_date", "Id");
+
+//    // Devide the date to (Day, Month and Year).
+//    DateTime desiredDate = DateTime.Parse(date);
+//    string day = desiredDate.Day.ToString();
+//    string month = desiredDate.Month.ToString("MMMM");
+//    string year = desiredDate.Year.ToString();
+
+//    // Navigate to correct year and month.
+//    while (true)
+//    {
+//        // Get the month and year from calender.
+//        string calenderMonth = driver.FindElement(By.XPath("/html/body/div[2]/div[1]/table/thead/tr[2]/th[2]")).Text;
+//        if (calenderMonth.Contains(year) && calenderMonth.Contains(month))
+//            break;
+//        else
+//            Click(driver, "/html/body/div[2]/div[1]/table/thead/tr[2]/th[3]", "XPath");
+//    }
+
+//    // Click the right day.
+//    driver.FindElement(By.XPath($"//td[@class='day' and text()='{day}']")).Click();
+
+
+//}
